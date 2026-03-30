@@ -77,22 +77,111 @@ metadata:
 
 ### Step 4: 双平台提示词生成
 
-#### Veo 3.1 英文提示词规则
-- 结构：`Shot type + Camera movement + Subject action + Lighting + Composition + Style reference`
-- 运镜使用专业术语：slow dolly in, handheld tracking shot, aerial crane shot
-- 光影具体化：golden hour backlight, harsh overhead lighting, soft diffused natural light
-- 构图引用经典：rule of thirds, Dutch angle, symmetrical composition
-- 导演风格：in the style of [Director]
-- 美术风格：[Style] aesthetic
-- 示例：`Medium tracking shot, a woman in white linen walks through a narrow Moroccan alleyway, golden hour backlight casting long shadows, shallow depth of field, warm color palette, cinematic film grain, 24fps`
+**核心原则：Veo 用结构化精确控制，即梦用电影化叙事驱动。两套提示词风格完全不同，不可混用。**
 
-#### 即梦 Seedance 2.0 中文提示词规则
-- 结构：`风格标签 + 画面主体 + 环境氛围 + 色调风格 + 镜头感觉 + 技法`
-- 风格标签前置：电影质感、80年代日漫风格、Arcane风格、赛博朋克
-- 使用即梦擅长理解的关键词：德味、日系清新、胶片质感、暗黑童话
-- 导演风格：`XXX导演风格`
-- 技法标注：`眩晕变焦`、`一镜到底`、`荷兰角`
-- 示例：`电影质感，中景跟拍，一位穿白色亚麻裙的女子走在摩洛哥窄巷中，黄昏逆光，长影投射，浅景深，暖色调，胶片颗粒感`
+---
+
+#### 🎬 Veo 3.1 英文提示词：五维结构化法
+
+Veo 3.1 需要像导演写技术方案一样精确。每次生成必须覆盖以下 5 个维度：
+
+**五维公式：`摄影镜头构图 + 主体规范 + 动作与物理交互 + 环境与氛围 + 风格美学`**
+
+**维度 1：摄影与镜头构图（Cinematography）**
+- 必须指定：镜头类型（camera_type）、运镜方式（movement）、焦距（focal_length）、光圈（aperture）
+- 运镜使用专业术语：`slow dolly in`, `handheld tracking shot`, `aerial crane shot`, `180-degree arc shot`, `anamorphic lens`
+- 速度分级：`very_slow`, `slow`, `medium`, `fast`, `very_fast`
+- 有效运镜类型枚举：`static`, `pan_left`, `pan_right`, `tilt_up`, `tilt_down`, `truck_left`, `truck_right`, `dolly_in`, `dolly_out`, `descend`, `ascend`, `push_in`, `pull_out`, `orbit_cw`, `orbit_ccw`
+
+**维度 2：主体规范（Subject）**
+- 对每个角色必须极其具体：年龄、种族、服装材质、发型、面部特征、皮肤纹理
+- 禁止用角色名字，必须用外貌描述保持一致性
+- 高频有效词：`grizzled`（沧桑感）, `expressive wide eyes`（情感连接）, `weathered skin`（阅历感）
+
+**维度 3：动作与物理交互（Action & Physics）**
+- 不只说"做什么"，必须描述"如何做"以及物理后果
+- 必须包含至少一个物理细节：`explosion of flour`, `condensation forming on glass`, `steam rising`, `cloth fluttering in wind`
+- 动态细节示例：不说"修补渔网"，说"用布满伤疤的手一针一线修补渔网，指尖被麻绳勒出红痕"
+
+**维度 4：环境与氛围（Environment）**
+- 光线具体化：`golden hour backlight`, `harsh overhead lighting`, `soft diffused natural light`, `neon-lit cyberpunk alley`
+- 天气与氛围：`fog-drenched`（悬疑）, `dappled sunlight`（自然）, `volumetric rays`（神圣）
+- 构图引用：`rule of thirds`, `Dutch angle`, `symmetrical composition`, `shallow depth of field`
+
+**维度 5：风格与美学（Style & Aesthetics）**
+- 风格指令：`cinematic film grain`, `hyper-realistic`, `VHS footage`, `noir`, `Pixar-style 3D animation`
+- 导演风格：`in the style of [Director]`
+- 美术风格：`[Style] aesthetic`
+- 必须标注帧率和画幅：`24fps`, `16:9`, `anamorphic`
+
+**Veo 3.1 提示词模板（每个镜头都必须按此结构生成）：**
+
+```
+[Cinematography] [Shot Size] shot, [Camera Movement] at [Speed] speed, [Focal Length] lens, [Aperture] aperture.
+
+[Subject] [Detailed character appearance with clothing material, hair, skin texture, age], [Specific action with physical consequences and micro-details].
+
+[Environment] Set in [Detailed location description], [Time of day] lighting with [Specific light source and direction], [Weather/atmosphere], [Mood keyword].
+
+[Style] [Visual style], [Color grading], [Film grain/textures], [Director reference if any].
+
+[Negative] Avoid: [List of unwanted elements]
+```
+
+**Veo 3.1 完整示例：**
+> Medium close-up shot, slow push-in at slow speed, 85mm lens, f/1.8 aperture. A man in his late 30s with deep brown skin, short cropped hair, wearing a faded yellow Danfo bus driver's t-shirt, sits by the window. His brow furrows as he stares intently at his phone screen, then his pupils dilate, the corners of his mouth twitch upward before breaking into a wide grin. He leaps to his feet, clutching the phone with both trembling hands. Set inside a crowded Lagos yellow Danfo bus, harsh afternoon tropical sunlight streaming through dusty windows casting dramatic shadows, warm orange interior light contrasting with bright exterior. Cinematic, warm color palette with golden highlights, subtle film grain, 24fps, 16:9. Avoid: cartoon, anime, low quality, distorted faces.
+
+---
+
+#### 🌙 即梦 Seedance 2.0 中文提示词：电影化叙事法
+
+即梦 Seedance 2.0 的核心是**讲故事**。提示词不是参数清单，而是一段有情节推进、情绪转折、动作细节的微型剧本。
+
+**核心公式：`场景 + 人物 + 情绪变化弧线 + 具体动作序列 + 环境感官细节 + 镜头感觉`**
+
+**关键原则：**
+
+1. **叙事优先，参数第二**：先想清楚"这个镜头讲什么故事"，再补充镜头参数
+2. **情绪弧线是灵魂**：每个提示词必须有清晰的情绪变化，用逗号分隔的动词链推动情绪
+   - 情绪动词链示例：`一脸紧张地凝视 → 皱起眉头 → 瞳孔收缩 → 嘴角上扬 → 突然开怀大笑`
+3. **动作要微观具体**：不说"看手机"，说"双手紧握手机，指尖发白，屏幕的光映在他的瞳孔里"
+4. **环境要有感官**：加入声音暗示、温度暗示、气味暗示
+   - 声音暗示：`引擎的轰鸣声`, `车窗外嘈杂的街道噪音`
+   - 温度暗示：`闷热潮湿的热带午后`
+   - 气味暗示：`空气中弥漫着柴油和汗水混合的味道`
+5. **对白直接嵌入**：即梦支持文字渲染，对话直接写在提示词中用引号标注
+6. **群体反应增加戏剧性**：不只有主角反应，还要写周围人的连锁反应
+7. **结尾要有冲击力**：最后一个画面必须有记忆点
+
+**即梦提示词结构模板：**
+
+```
+[场景环境描述，包含感官细节],
+
+[人物外貌和状态描述],
+
+[动作序列：起始状态 → 情绪转变 → 高潮动作，用"→"或逗号串联],
+
+[对白，用引号直接写入],
+
+[群体/环境连锁反应],
+
+[结尾冲击画面]
+```
+
+**即梦 Seedance 2.0 完整示例：**
+> 在尼日利亚拉各斯的闷热午后，一辆破旧的黄色Danfo公交车在坑坑洼洼的土路上颠簸，车厢里弥漫着柴油和汗水混合的味道，引擎发出嘶哑的轰鸣，一个坐在窗边的黑人青年，穿着褪色的蓝色T恤，一脸紧张地盯着自己的手机屏幕，他仔细凝视了一会儿，眉头紧锁，突然瞳孔骤然收缩，嘴角不受控制地上扬，猛然间开怀大笑，对着全车的人大声喊叫「I just won 100 million naira!!!」，车内的乘客纷纷从座位上弹起，蜂拥着挤过来看他的手机，一群人疯狂地追问：Where did you win？黑人青年激动地回答：WajeGame! Guys! WajeGame! 全车人瞬间沸腾，有人拍打座椅，有人高举双手欢呼，车窗外的拉各斯街头依旧嘈杂，但此刻车厢内仿佛成了全世界最快乐的地方
+
+**即梦 vs Veo 提示词对比（同一个镜头）：**
+
+| 维度 | Veo 3.1（结构化） | 即梦 Seedance 2.0（叙事化） |
+|------|-------------------|---------------------------|
+| 开头 | 镜头参数：景别+运镜+焦距 | 场景环境+感官氛围 |
+| 人物 | 外貌参数：年龄+种族+服装材质 | 人物状态+情绪描写 |
+| 动作 | 物理动作+微观细节 | 情绪弧线+动词链 |
+| 对白 | 在 subject 区域标注 | 直接嵌入叙事流 |
+| 光影 | 精确光源+方向+色温 | 融入环境氛围描写 |
+| 结尾 | negative prompts | 群体反应+冲击画面 |
 
 ### Step 5: 双格式输出
 
