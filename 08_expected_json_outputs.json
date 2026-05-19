@@ -1,52 +1,16 @@
 [
-  {
-    "case_id": "T001",
-    "expected_output": {
-      "workload_score": 38,
-      "clarity_score": 62,
-      "collaboration_friction_score": 55,
-      "resource_gap_score": 58,
-      "risk_level": "medium",
-      "short_summary": "High review volume and detailed rejection requirements increased pressure. Compliance and formatting checks consumed significant time.",
-      "manager_suggestions": [
-        "Cap first-review batch size per day.",
-        "Provide a reusable rejection-reason template.",
-        "Pre-screen technical specs before first review."
-      ],
-      "confidence_note": "Moderate confidence from concrete operational details in the reply."
-    }
-  },
-  {
-    "case_id": "T002",
-    "expected_output": {
-      "workload_score": 64,
-      "clarity_score": 57,
-      "collaboration_friction_score": 40,
-      "resource_gap_score": 34,
-      "risk_level": "low",
-      "short_summary": "Generally workable week, but vague scene actions and identity mismatch in monologue required extra performance alignment.",
-      "manager_suggestions": [
-        "Add action-specific script notes before rehearsal.",
-        "Flag character-voice mismatches during script review."
-      ],
-      "confidence_note": "Good confidence; reply provides specific script-performance blockers."
-    }
-  },
-  {
-    "case_id": "T003",
-    "expected_output": {
-      "workload_score": 42,
-      "clarity_score": 46,
-      "collaboration_friction_score": 68,
-      "resource_gap_score": 74,
-      "risk_level": "medium",
-      "short_summary": "Set operations faced logistics and infrastructure disruptions, with late changes from remote instructions increasing execution strain.",
-      "manager_suggestions": [
-        "Lock priority shot list earlier.",
-        "Confirm props and actor readiness at T-24 hours.",
-        "Prepare contingency plan for power interruptions."
-      ],
-      "confidence_note": "Moderate confidence with clear mention of multiple field blockers."
-    }
-  }
+  {"case_id":"T001","expected_output":{"person_id":"E001","full_name":"Fadiran Olumide","role_type":"qc_manager","week_start_date":"2026-05-11","workload_score":22,"clarity_gap_score":18,"collaboration_friction_score":20,"resource_gap_score":15,"risk_level":"low","short_summary":"QC queue was light and checks were straightforward with minimal execution pressure.","manager_suggestions":["Maintain current intake pacing and pre-check process."],"confidence_note":"Good confidence from clear positive operational signals."}},
+  {"case_id":"T002","expected_output":{"person_id":"E001","full_name":"Fadiran Olumide","role_type":"qc_manager","week_start_date":"2026-05-18","workload_score":74,"clarity_gap_score":44,"collaboration_friction_score":62,"resource_gap_score":48,"risk_level":"medium","short_summary":"Review load increased with repetitive corrections, creating moderate delivery strain.","manager_suggestions":["Introduce pre-submission spec checklist.","Limit daily first-review batch size."],"confidence_note":"Moderate confidence from specific workload and rework details."}},
+  {"case_id":"T003","expected_output":{"person_id":"E001","full_name":"Fadiran Olumide","role_type":"qc_manager","week_start_date":"2026-05-25","workload_score":92,"clarity_gap_score":76,"collaboration_friction_score":81,"resource_gap_score":84,"risk_level":"high","short_summary":"Severe first-review overload with major compliance and technical defects created high operational risk.","manager_suggestions":["Escalate temporary review support.","Enforce mandatory compliance pre-screen before submission.","Prioritize critical assets with strict triage."],"confidence_note":"High confidence due to multiple concrete high-severity blockers."}},
+  {"case_id":"T004","expected_output":{"person_id":"E001","full_name":"Fadiran Olumide","role_type":"qc_manager","week_start_date":"2026-06-01","workload_score":58,"clarity_gap_score":55,"collaboration_friction_score":66,"resource_gap_score":42,"risk_level":"low","short_summary":"Workload was moderate, but revision communication loops reduced efficiency.","manager_suggestions":["Standardize rejection reason templates.","Align creator feedback format to reduce rewrites."],"confidence_note":"Moderate confidence; issues are specific but not severe."}},
+
+  {"case_id":"T005","expected_output":{"person_id":"E002","full_name":"Chiemeli Kanikwu","role_type":"performance_bridge","week_start_date":"2026-05-11","workload_score":24,"clarity_gap_score":20,"collaboration_friction_score":22,"resource_gap_score":18,"risk_level":"low","short_summary":"Script-to-performance translation was clear and execution remained smooth.","manager_suggestions":["Keep current script briefing standard."],"confidence_note":"Good confidence with consistent low-risk indicators."}},
+  {"case_id":"T006","expected_output":{"person_id":"E002","full_name":"Chiemeli Kanikwu","role_type":"performance_bridge","week_start_date":"2026-05-18","workload_score":52,"clarity_gap_score":72,"collaboration_friction_score":58,"resource_gap_score":40,"risk_level":"medium","short_summary":"Unclear extras direction increased rehearsal needs and reduced performance efficiency.","manager_suggestions":["Add explicit extras behavior notes to scripts.","Schedule short pre-blocking alignment session."],"confidence_note":"Moderate confidence from targeted clarity gaps."}},
+  {"case_id":"T007","expected_output":{"person_id":"E002","full_name":"Chiemeli Kanikwu","role_type":"performance_bridge","week_start_date":"2026-05-25","workload_score":82,"clarity_gap_score":88,"collaboration_friction_score":78,"resource_gap_score":62,"risk_level":"high","short_summary":"Multiple unclear performance cues and voice mismatch issues caused strong coordination strain and delivery risk.","manager_suggestions":["Run script-performance coherence review before shoot.","Add mandatory action-level direction for key scenes.","Allocate extra rehearsal buffer for complex scenes."],"confidence_note":"High confidence due to repeated high-severity performance blockers."}},
+  {"case_id":"T008","expected_output":{"person_id":"E002","full_name":"Chiemeli Kanikwu","role_type":"performance_bridge","week_start_date":"2026-06-01","workload_score":46,"clarity_gap_score":54,"collaboration_friction_score":40,"resource_gap_score":30,"risk_level":"low","short_summary":"Most scenes were executable, with moderate clarity gaps on specific transitions.","manager_suggestions":["Add movement notes to transition scenes earlier."],"confidence_note":"Good confidence from balanced details."}},
+
+  {"case_id":"T009","expected_output":{"person_id":"E003","full_name":"Chinonyerem Emmanuella","role_type":"set_operations","week_start_date":"2026-05-11","workload_score":20,"clarity_gap_score":18,"collaboration_friction_score":16,"resource_gap_score":14,"risk_level":"low","short_summary":"Field operations were well-prepared with smooth execution and no significant blockers.","manager_suggestions":["Maintain current readiness confirmation routine."],"confidence_note":"Good confidence from clear low-friction operations context."}},
+  {"case_id":"T010","expected_output":{"person_id":"E003","full_name":"Chinonyerem Emmanuella","role_type":"set_operations","week_start_date":"2026-05-18","workload_score":60,"clarity_gap_score":42,"collaboration_friction_score":50,"resource_gap_score":72,"risk_level":"medium","short_summary":"Traffic and late prop delivery increased schedule pressure and exposed resource timing gaps.","manager_suggestions":["Confirm transport and prop arrival buffers at T-24.","Set fallback prop list for critical shots."],"confidence_note":"Moderate confidence based on specific field delays."}},
+  {"case_id":"T011","expected_output":{"person_id":"E003","full_name":"Chinonyerem Emmanuella","role_type":"set_operations","week_start_date":"2026-05-25","workload_score":90,"clarity_gap_score":74,"collaboration_friction_score":82,"resource_gap_score":88,"risk_level":"high","short_summary":"Compound field disruptions and late changes produced severe operational risk on set.","manager_suggestions":["Freeze shot priorities earlier with remote team.","Deploy contingency coverage for power and location delays.","Escalate actor readiness confirmations to T-24 and T-4 checkpoints."],"confidence_note":"High confidence from multiple severe blockers across logistics and coordination."}},
+  {"case_id":"T012","expected_output":{"person_id":"E003","full_name":"Chinonyerem Emmanuella","role_type":"set_operations","week_start_date":"2026-06-01","workload_score":64,"clarity_gap_score":48,"collaboration_friction_score":52,"resource_gap_score":58,"risk_level":"low","short_summary":"External conditions created moderate stress, but planning reduced escalation.","manager_suggestions":["Continue priority shot planning and add network backup plan."],"confidence_note":"Moderate confidence due to mixed risk and mitigation signals."}}
 ]

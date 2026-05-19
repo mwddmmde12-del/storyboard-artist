@@ -14,6 +14,7 @@ Pulse Check | Week of {{week_start_date}} | {{preferred_name}}
 Hello {{preferred_name}},
 
 This is your weekly Employee Pulse check-in.  
+This check-in is used to understand work blockers, planning needs, and support needs. It is not a punishment or performance evaluation tool.  
 Please reply in this same thread with short answers.
 
 1) {{question_1}}  

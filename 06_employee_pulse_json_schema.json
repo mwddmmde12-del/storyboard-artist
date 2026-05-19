@@ -4,8 +4,12 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
+    "person_id",
+    "full_name",
+    "role_type",
+    "week_start_date",
     "workload_score",
-    "clarity_score",
+    "clarity_gap_score",
     "collaboration_friction_score",
     "resource_gap_score",
     "risk_level",
@@ -14,12 +18,30 @@
     "confidence_note"
   ],
   "properties": {
+    "person_id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 50
+    },
+    "full_name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 120
+    },
+    "role_type": {
+      "type": "string",
+      "enum": ["qc_manager", "performance_bridge", "set_operations"]
+    },
+    "week_start_date": {
+      "type": "string",
+      "format": "date"
+    },
     "workload_score": {
       "type": "integer",
       "minimum": 0,
       "maximum": 100
     },
-    "clarity_score": {
+    "clarity_gap_score": {
       "type": "integer",
       "minimum": 0,
       "maximum": 100
