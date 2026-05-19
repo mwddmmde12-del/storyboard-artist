@@ -18,6 +18,7 @@ Recommended Google Sheet tabs:
 3. Weekly_Records
 4. Monthly_Profile
 5. Team_Heatmap
+6. Send_Log
 
 ---
 
@@ -49,6 +50,28 @@ Example role_type values:
 - `performance_bridge`
 - `set_operations`
 
+
+
+### C) Send_Log tab
+Columns:
+- `send_id`
+- `person_id`
+- `full_name`
+- `role_type`
+- `mode`
+- `week_start_date`
+- `primary_email`
+- `email_subject`
+- `gmail_thread_id`
+- `gmail_message_id`
+- `sent_at`
+- `reply_status`
+- `processed_status`
+
+Purpose:
+- Create a reliable link between outgoing check-ins and incoming replies.
+- Prevent ambiguous matching in test mode when multiple rows share one email address.
+
 ---
 
 ## Workflow 1 — Weekly Question Sender (No Function Node)
@@ -66,10 +89,15 @@ Nodes (simple flow):
 6. **Google Sheets: Lookup in Role_Questions** using `role_type`
 7. **Set Node** (map placeholders and use `primary_email` as receiver)
 8. **Gmail Send** from `mwddmmde12@gmail.com` (initial setup)
+9. **Google Sheets Append** to `Send_Log` with:
+   - `person_id`, `full_name`, `role_type`, `mode`, `week_start_date`, `primary_email`
+   - `email_subject`, `gmail_thread_id`, `gmail_message_id`, `sent_at`
+   - initialize `reply_status = pending`, `processed_status = pending`
 
 Important settings:
-- Subject format: `Pulse Check | Week of {{date}} | {{name}}`
+- Subject format: `Pulse Check | {{person_id}} | Week of {{week_start_date}} | {{preferred_name}}`
 - Keep all replies in same thread when possible.
+- Ensure every sent email creates one `Send_Log` row.
 
 ---
 
@@ -86,18 +114,24 @@ Nodes:
 6. **Filter Node** keep rows where:
    - `status = active`
    - `mode = {{$json.selected_mode}}`
-7. **Matching step**: match message sender email against:
-   - `primary_email`
-   - OR any email listed in `alternate_emails`
-8. **Use matched row person_id/full_name/role_type** for identity and context
-9. **Google Sheets Lookup (Role_Questions)** by `role_type`
-10. **OpenAI API Node** (use prompt from file 05)
-11. **JSON Parse + Validate** (against file 06 schema)
-12. **Google Sheets Append** (`Weekly_Records`)
+7. **Primary matching step (priority 1):** match incoming `gmail_thread_id` to `Send_Log.gmail_thread_id`.
+8. **Fallback matching (priority 2):** if thread ID is unavailable, parse `person_id` from subject pattern:
+   - `Pulse Check | {{person_id}} | Week of {{week_start_date}} | {{preferred_name}}`
+9. **Final fallback (priority 3):** if still unmatched, match sender email against:
+   - `Roster.primary_email`
+   - OR emails listed in `Roster.alternate_emails`
+10. **Ambiguity rule:** if sender email matches multiple active rows, route to operator review (do not auto-assign).
+11. **Use matched row person_id/full_name/role_type** for identity and context
+12. **Google Sheets Lookup (Role_Questions)** by `role_type`
+13. **OpenAI API Node** (use prompt from file 05)
+14. **JSON Parse + Validate** (against file 06 schema)
+15. **Google Sheets Append** (`Weekly_Records`)
+16. **Google Sheets Update `Send_Log`** set `reply_status/processed_status` for matched send record
 
 Important settings:
 - Keep Gmail label exactly: `pulse-replies`.
-- If no roster match is found, route to operator review.
+- Matching priority must be: thread ID -> subject person_id -> sender email.
+- If no match is found, route to operator review.
 - If JSON is invalid, send operator alert email and skip write.
 
 ---
@@ -136,9 +170,11 @@ Indicators:
 
 ## Operator checklist (weekly)
 - Confirm selected mode is correct (`test` or `production`).
+- Before running test mode, confirm each sent email creates a `Send_Log` row.
 - Confirm weekly emails were sent only to active rows in selected mode.
 - Confirm replies are tagged with `pulse-replies`.
-- Confirm sender matching works for `primary_email` and `alternate_emails`.
+- After receiving replies, confirm matching happens by `gmail_thread_id` or `person_id` first (not only sender email).
+- Confirm fallback sender matching works for `primary_email` and `alternate_emails`.
 - Review unmatched sender emails manually.
 
 ## Operator checklist (monthly)

@@ -7,7 +7,7 @@ These templates are for Gmail sending via n8n.
 ## A) Main weekly check-in email template
 
 **Subject:**  
-Pulse Check | Week of {{week_start_date}} | {{preferred_name}}
+Pulse Check | {{person_id}} | Week of {{week_start_date}} | {{preferred_name}}
 
 **Body:**
 
@@ -30,7 +30,7 @@ Thank you.
 ## B) Reminder template (if no reply within 24 hours)
 
 **Subject:**  
-Reminder: Pulse Check | Week of {{week_start_date}} | {{preferred_name}}
+Reminder: Pulse Check | {{person_id}} | Week of {{week_start_date}} | {{preferred_name}}
 
 **Body:**
 
@@ -46,7 +46,7 @@ Thank you.
 ## C) Confirmation template (optional)
 
 **Subject:**  
-Received: Pulse Check | Week of {{week_start_date}} | {{preferred_name}}
+Received: Pulse Check | {{person_id}} | Week of {{week_start_date}} | {{preferred_name}}
 
 **Body:**
 
