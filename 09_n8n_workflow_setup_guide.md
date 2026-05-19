@@ -7,7 +7,7 @@ This guide explains how to set up the Employee Pulse MVP in n8n Cloud.
 ## Before you start
 You need:
 - n8n Cloud account
-- Gmail account (recommended: dedicated operations mailbox)
+- Gmail account (initial operations sender: **mwddmmde12@gmail.com**)
 - Google Sheet with planned tabs
 - OpenAI API key
 - Looker Studio access
@@ -21,9 +21,25 @@ Recommended Google Sheet tabs:
 
 ---
 
+## Mode setup (important)
+This MVP supports:
+- **test mode**
+- **production mode**
+
+**Warning:** Always run test mode first using `pmalex@ngfortunehouse.com` before sending to real employees.
+
+Operator should set a single mode variable in n8n (example: `selected_mode = test` or `selected_mode = production`).
+
+---
+
 ## Required Google Sheet design
 ### A) Roster tab
-Columns: `person_id, full_name, preferred_name, role_type, email, status`
+Columns: `person_id, full_name, preferred_name, role_type, primary_email, alternate_emails, mode, status, notes`
+
+Rules:
+- Use `primary_email` for sending weekly check-ins.
+- Use both `primary_email` and `alternate_emails` for reply matching.
+- Use `person_id` as permanent identity in structured records.
 
 ### B) Role_Questions tab
 Columns: `role_type, question_1, question_2, question_3`
@@ -33,8 +49,6 @@ Example role_type values:
 - `performance_bridge`
 - `set_operations`
 
-This allows no-code question lookup without using a Function node.
-
 ---
 
 ## Workflow 1 — Weekly Question Sender (No Function Node)
@@ -43,11 +57,15 @@ This allows no-code question lookup without using a Function node.
 
 Nodes (simple flow):
 1. **Schedule Trigger** (weekly, e.g., Monday 9:00 AM Africa/Lagos)
-2. **Google Sheets: Read Roster** (filter status = active)
-3. **Loop Over Items** (one person at a time)
-4. **Google Sheets: Lookup in Role_Questions** using `role_type`
-5. **Set Node** (map fields for email placeholders)
-6. **Gmail Send** (one email per employee)
+2. **Set Node** to define `selected_mode` (`test` or `production`)
+3. **Google Sheets: Read Roster**
+4. **Filter Node** keep only rows where:
+   - `status = active`
+   - `mode = {{$json.selected_mode}}`
+5. **Loop Over Items** (one person at a time)
+6. **Google Sheets: Lookup in Role_Questions** using `role_type`
+7. **Set Node** (map placeholders and use `primary_email` as receiver)
+8. **Gmail Send** from `mwddmmde12@gmail.com` (initial setup)
 
 Important settings:
 - Subject format: `Pulse Check | Week of {{date}} | {{name}}`
@@ -61,16 +79,25 @@ Important settings:
 
 Nodes:
 1. **Schedule Trigger** (every 2–4 hours)
-2. **Gmail Search** (filter by label, e.g., `pulse-replies`)
-3. **Data Store or Sheet Check** (skip already-processed message IDs)
-4. **Google Sheets Lookup (Roster)** by sender email to get `person_id/full_name/role_type`
-5. **Google Sheets Lookup (Role_Questions)** by `role_type` to attach question context
-6. **OpenAI API Node** (use prompt from file 05)
-7. **JSON Parse + Validate** (against file 06 schema)
-8. **Google Sheets Append** (`Weekly_Records`)
+2. **Set Node** to define `selected_mode` (`test` or `production`)
+3. **Gmail Search** (label: `pulse-replies`)
+4. **Data Store or Sheet Check** (skip already-processed message IDs)
+5. **Google Sheets Read Roster**
+6. **Filter Node** keep rows where:
+   - `status = active`
+   - `mode = {{$json.selected_mode}}`
+7. **Matching step**: match message sender email against:
+   - `primary_email`
+   - OR any email listed in `alternate_emails`
+8. **Use matched row person_id/full_name/role_type** for identity and context
+9. **Google Sheets Lookup (Role_Questions)** by `role_type`
+10. **OpenAI API Node** (use prompt from file 05)
+11. **JSON Parse + Validate** (against file 06 schema)
+12. **Google Sheets Append** (`Weekly_Records`)
 
 Important settings:
-- Read only messages from the approved label/thread.
+- Keep Gmail label exactly: `pulse-replies`.
+- If no roster match is found, route to operator review.
 - If JSON is invalid, send operator alert email and skip write.
 
 ---
@@ -82,14 +109,10 @@ Important settings:
 Nodes:
 1. **Schedule Trigger** (end/start of month)
 2. **Google Sheets Read** (`Weekly_Records` for month)
-3. **Aggregate by person** (Item Lists / Summarize style no-code node)
+3. **Aggregate by person_id** (no-code summarize node)
 4. **OpenAI API summary step** (short management-focused summary)
 5. **Write to `Monthly_Profile`**
 6. **Delete/exclude raw reply text store** (if maintained separately)
-
-Important settings:
-- Keep trend scores, summary, and suggestions.
-- Remove raw reply details after monthly output is confirmed.
 
 ---
 
@@ -100,37 +123,25 @@ Important settings:
 Nodes:
 1. **Trigger** (after weekly/monthly updates)
 2. **Read `Weekly_Records` + `Monthly_Profile`**
-3. **Transform to long/heatmap format** (no-code transform node)
+3. **Transform to long/heatmap format**
 4. **Write to `Team_Heatmap`**
 
-Indicators for heatmap:
+Indicators:
 - `workload_score`
 - `clarity_gap_score`
 - `collaboration_friction_score`
 - `resource_gap_score`
 
-Important interpretation:
-- Higher score always means higher risk / more management attention needed.
-
----
-
-## Looker Studio setup notes
-- Connect to the Google Sheet.
-- Build charts:
-  1. Weekly status table
-  2. Per-person trend lines
-  3. Indicator heatmap
-  4. Monthly summary cards
-
 ---
 
 ## Operator checklist (weekly)
-- Confirm weekly emails were sent.
-- Confirm replies were tagged with correct Gmail label.
-- Confirm JSON outputs were saved to `Weekly_Records`.
-- Review high-risk items manually.
+- Confirm selected mode is correct (`test` or `production`).
+- Confirm weekly emails were sent only to active rows in selected mode.
+- Confirm replies are tagged with `pulse-replies`.
+- Confirm sender matching works for `primary_email` and `alternate_emails`.
+- Review unmatched sender emails manually.
 
 ## Operator checklist (monthly)
-- Confirm monthly profiles generated.
+- Confirm monthly profiles generated by `person_id`.
 - Confirm team heatmap updated.
 - Confirm raw reply text cleanup completed.

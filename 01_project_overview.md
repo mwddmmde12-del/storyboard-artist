@@ -32,6 +32,23 @@ The system will run later with:
 
 ---
 
+## Operating modes
+This MVP supports two operating modes:
+
+1. **Test mode**
+   - Operations/sender Gmail: `mwddmmde12@gmail.com`
+   - Receiver email for all test rows: `pmalex@ngfortunehouse.com`
+   - Test identities: `TEST001`, `TEST002`, `TEST003`
+
+2. **Production pilot mode**
+   - `E001` Fadiran Olumide (`qc_manager`)
+   - `E002` Chiemeli Kanikwu (`performance_bridge`)
+   - `E003` Chinonyerem Emmanuella (`set_operations`)
+
+Identity rule:
+- Use `person_id` as the permanent identity in long-term records.
+- Do not use email address as long-term identity.
+
 ## MVP goals
 Every week, the system should:
 1. Send each person **3 check-in questions** by email.

@@ -10,8 +10,9 @@ It is not a medical, psychological, or personality assessment tool.
 ## What data is collected
 1. Weekly email replies to 3 work check-in questions.
 2. Structured analysis outputs:
+   - person_id (permanent identity key)
    - workload_score
-   - clarity_score
+   - clarity_gap_score
    - collaboration_friction_score
    - resource_gap_score
    - risk_level
@@ -33,6 +34,8 @@ It is not a medical, psychological, or personality assessment tool.
 - Raw text is deleted or excluded after monthly summaries are finalized.
 
 ### Long-term data
+- Use `person_id` as the long-term identity key.
+- Do not use email addresses as permanent identity values.
 - Keep only structured scores, short work summaries, and management suggestions.
 - Keep trend-level monthly outputs for planning and support.
 
