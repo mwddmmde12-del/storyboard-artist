@@ -1,0 +1,7 @@
+person_id,full_name,preferred_name,role_type,primary_email,alternate_emails,mode,status,notes
+TEST001,Test Fad,Test Fad,qc_manager,pmalex@ngfortunehouse.com,,test,active,"Test-mode row for qc_manager flow validation"
+TEST002,Test Chiemeli,Test Chiemeli,performance_bridge,pmalex@ngfortunehouse.com,,test,active,"Test-mode row for performance_bridge flow validation"
+TEST003,Test Chinonyerem,Test Chinonyerem,set_operations,pmalex@ngfortunehouse.com,,test,active,"Test-mode row for set_operations flow validation"
+E001,Fadiran Olumide,Fad,qc_manager,fadiranolumide@wajegame.com,,production,active,"Production pilot"
+E002,Chiemeli Kanikwu,Chiemeli,performance_bridge,chiemeli@wajegame.com,,production,active,"Production pilot"
+E003,Chinonyerem Emmanuella,Chinonyerem,set_operations,chinonyerem@wajegame.com,,production,active,"Production pilot"
