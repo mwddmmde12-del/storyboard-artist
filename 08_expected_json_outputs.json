@@ -1,0 +1,52 @@
+[
+  {
+    "case_id": "T001",
+    "expected_output": {
+      "workload_score": 38,
+      "clarity_score": 62,
+      "collaboration_friction_score": 55,
+      "resource_gap_score": 58,
+      "risk_level": "medium",
+      "short_summary": "High review volume and detailed rejection requirements increased pressure. Compliance and formatting checks consumed significant time.",
+      "manager_suggestions": [
+        "Cap first-review batch size per day.",
+        "Provide a reusable rejection-reason template.",
+        "Pre-screen technical specs before first review."
+      ],
+      "confidence_note": "Moderate confidence from concrete operational details in the reply."
+    }
+  },
+  {
+    "case_id": "T002",
+    "expected_output": {
+      "workload_score": 64,
+      "clarity_score": 57,
+      "collaboration_friction_score": 40,
+      "resource_gap_score": 34,
+      "risk_level": "low",
+      "short_summary": "Generally workable week, but vague scene actions and identity mismatch in monologue required extra performance alignment.",
+      "manager_suggestions": [
+        "Add action-specific script notes before rehearsal.",
+        "Flag character-voice mismatches during script review."
+      ],
+      "confidence_note": "Good confidence; reply provides specific script-performance blockers."
+    }
+  },
+  {
+    "case_id": "T003",
+    "expected_output": {
+      "workload_score": 42,
+      "clarity_score": 46,
+      "collaboration_friction_score": 68,
+      "resource_gap_score": 74,
+      "risk_level": "medium",
+      "short_summary": "Set operations faced logistics and infrastructure disruptions, with late changes from remote instructions increasing execution strain.",
+      "manager_suggestions": [
+        "Lock priority shot list earlier.",
+        "Confirm props and actor readiness at T-24 hours.",
+        "Prepare contingency plan for power interruptions."
+      ],
+      "confidence_note": "Moderate confidence with clear mention of multiple field blockers."
+    }
+  }
+]

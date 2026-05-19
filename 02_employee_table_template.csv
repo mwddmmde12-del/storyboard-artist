@@ -1,0 +1,4 @@
+person_id,full_name,preferred_name,role_title,function_summary,email,status,timezone,manager_notes
+E001,Fadiran Olumide,Fad,"Senior Project Executive & QC Manager","First review, project execution, QC, compliance, AI material boundary checks",fadiran@example.com,active,Africa/Lagos,
+E002,Chiemeli Kanikwu,Chiemeli,"Structural Bridge / Performance Check","Bridges script intent to actor performance and shootability",chiemeli@example.com,active,Africa/Lagos,
+E003,Chinonyerem Emmanuella,Chinonyerem,"Set Coordinator / Field Operations","On-site execution, actor coordination, props/location/timing readiness",chinonyerem@example.com,active,Africa/Lagos,

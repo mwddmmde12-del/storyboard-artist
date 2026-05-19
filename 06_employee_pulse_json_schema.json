@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Employee Pulse Weekly Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "workload_score",
+    "clarity_score",
+    "collaboration_friction_score",
+    "resource_gap_score",
+    "risk_level",
+    "short_summary",
+    "manager_suggestions",
+    "confidence_note"
+  ],
+  "properties": {
+    "workload_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "clarity_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "collaboration_friction_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "resource_gap_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high"]
+    },
+    "short_summary": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 800
+    },
+    "manager_suggestions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 300
+      }
+    },
+    "confidence_note": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 300
+    }
+  }
+}
